@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Warp Shader Lab</title>
+<meta name="description" content="ドメインワーピングで流体グラフィックを作り、インスタ用サイズのPNGで保存できるWebGLツール">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Warp Shader Lab</h1>
+    <p>スタイルを選ぶ → 候補から選ぶ → スライダーで整える → 保存</p>
+  </header>
+
+  <div class="stage" id="stage">
+    <canvas id="c" tabindex="0" aria-label="生成グラフィック。ドラッグで模様を動かし、スクロールで拡大縮小できます"></canvas>
+    <p class="hint">ドラッグで模様を動かす　/　スクロールで拡大・縮小　/　ダブルクリックで位置を戻す</p>
+    <p class="toast" id="toast" role="status"></p>
+  </div>
+
+  <aside class="panel">
+    <div class="group">
+      <div class="label">1. スタイル</div>
+      <div class="seg">
+        <button class="preset" id="p-holo" data-p="holo" aria-pressed="true">Holo<small>虹色＋網点</small></button>
+        <button class="preset" id="p-mono" data-p="mono" aria-pressed="false">Mono<small>白黒＋粒子</small></button>
+        <button class="preset" id="p-soft" data-p="soft" aria-pressed="false">Grid<small>色のにじみ</small></button>
+      </div>
+      <div class="seg">
+        <button class="size" id="z-11" data-w="1" data-h="1" aria-pressed="true">1:1<small>フィード</small></button>
+        <button class="size" id="z-45" data-w="4" data-h="5" aria-pressed="false">4:5<small>フィード縦</small></button>
+        <button class="size" id="z-916" data-w="9" data-h="16" aria-pressed="false">9:16<small>ストーリーズ</small></button>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="label">2. 候補から選ぶ <button id="more" style="padding:3px 10px;font-size:12px">別の候補</button></div>
+      <div class="cands" id="cands"></div>
+    </div>
+
+    <div class="group">
+      <div class="label">3. 整える</div>
+      <div id="knobs" class="group"></div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="save">PNGで保存（幅1080px）</button>
+      <button id="reset">最初の状態に戻す</button>
+      <button id="pause" aria-pressed="false">一時停止</button>
+    </div>
+
+    <details>
+      <summary>詳細設定（数値で調整）</summary>
+      <div class="group"><div class="label">形</div><div id="shape"></div></div>
+      <div class="group"><div class="label">色と質感</div><div id="tex"></div></div>
+      <div class="group">
+        <div class="label">グリッド</div>
+        <label class="check"><input type="checkbox" id="grid"> セルに分割（セルごとに別の模様）</label>
+        <div id="gridrows"></div>
+      </div>
+      <div class="group">
+        <button id="copy">シェーダー（GLSL）をコピー</button>
+        <p class="note">Shadertoy や p5.js の createShader に移植できます。uniform名だけ合わせてください。</p>
+      </div>
+    </details>
+  </aside>
+</div>
+
+<script src="js/shader.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
